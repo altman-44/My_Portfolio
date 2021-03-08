@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function displayProjects() {
-        readTextFile('../data.json', text => {
+        readTextFile('../../data.json', text => {
             var data = JSON.parse(text);
             console.log(data);
         });
