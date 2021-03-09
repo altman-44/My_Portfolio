@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const manager = {
         components: {
             projectsBox: document.querySelector('#projects-box'),
-            colorSchemeSwitch: document.querySelector('#color-scheme-switch')
+            // colorSchemeSwitch: document.querySelector('#color-scheme-switch')
         },
         settingsData: JSON.parse(await ajax('./settings.json', 'application/json')) || {},
         projectsData: JSON.parse(await ajax('./data.json', 'application/json')) || {},
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function start() {
         manager.hideScrollbarIfNotOverflowing(document.getElementsByTagName('main')[0])
-        enableColorSchemeSwitch()
+        enableColorSchemeSwitch(manager.settingsData.defaults.colorSchemeMode)
         displayProjects()
         setStyle(manager.settingsData.defaults.colorSchemeMode)
     }
@@ -60,9 +60,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         return toggledMode
     }
 
-    function enableColorSchemeSwitch() {
-        manager.components.colorSchemeSwitch.addEventListener('click', () => {
-
+    function enableColorSchemeSwitch(colorSchemeMode = 'light') {
+        const colors = manager.settingsData.colors
+        const switchElement = document.querySelectorAll('.colorScheme-switch-container')[0]
+        const bgColor = colors[getColorSchemeModeToggled(colorSchemeMode) + 'Color']
+        switchElement.style.backgroundColor = bgColor
+        switchElement.style.borderColor = bgColor
+        const switchImgs = switchElement.querySelectorAll('.switch-img')
+        switchImgs.forEach((img, index) => {
+            img.style.backgroundColor = 'transparent'
+            img.addEventListener('click', function () {
+                this.style.backgroundColor = colors[getColorSchemeModeToggled(colorSchemeMode) + 'ModeTextColor']
+                switchImgs.forEach((currentImg, currentIndex) => {
+                    if (currentIndex !== index) {
+                        currentImg.style.backgroundColor = 'transparent'
+                    }
+                })
+                setStyle(this.dataset.colorSchemeMode)
+            })
         })
     }
 
