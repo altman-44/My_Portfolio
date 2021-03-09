@@ -1,6 +1,6 @@
 :root {
-    --main-bg-color: rgb(4, 4, 71);
-    --main-text-color: white;
-    --secondary-bg-color: rgb(197, 253, 197);
-    --secondary-text-color: var(--main-bg-color);
+    --main-bg-color: rgb(200, 199, 255);
+    --secondary-bg-color: rgb(4,4,71);
+    --main-text-color: var(--secondary-bg-color);
+    --secondary-text-color: white;
 }

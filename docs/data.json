@@ -2,7 +2,21 @@
     "projects": [
         {
             "name": "Fights Web App",
-            "img_preview_url": "./img/fights_webapp.png"
+            "url": "https://fightswebapp.azurewebsites.net/",
+            "img_preview": {
+                "url": "./img/fights_webapp.png",
+                "alt": "Fights Web App preview"
+            }
         }
-    ]
+    ],
+    "defaults": {
+        "projects": {
+            "name": "Project Title",
+            "url": "/",
+            "img_preview": {
+                "url": "",
+                "alt": "Project preview"
+            }
+        }
+    }
 }
