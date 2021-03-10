@@ -35,7 +35,6 @@ main {
 }
 
 .projects-box-container {
-    width: 90%;
     border: 2px solid;
     border-radius: 8px;
     padding: 3% 2% 3% 2%;
@@ -79,14 +78,20 @@ main {
     justify-content: space-between;
     border-radius: 50px;
     overflow: hidden;
-    /* transform: translate(-50%, -50%); */
 }
 
 .colorScheme-switch-container .switch-img {
-    width: 46%;
+    width: 48%;
     cursor: pointer;
     border-radius: 50px;
     transition: .8s ease;
+    padding: 4%;
+    transform: rotate(360deg);
+}
+
+.colorScheme-switch-container .switch-img:hover {
+    transform: rotate(720deg);
+    transition: transform 0.4s ease;
 }
 
 @media screen and (min-width: 769px) {

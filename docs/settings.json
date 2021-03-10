@@ -3,7 +3,7 @@
         "darkColor": "rgb(4,4,71)",
         "lightColor": "rgb(200, 199, 255)",
         "darkModeTextColor": "rgb(255, 255, 255)",
-        "lightModeTextColor": "rgb(4,4,71)"
+        "lightModeTextColor": "rgb(4, 4, 71)"
     },
     "defaults": {
         "language": "en",

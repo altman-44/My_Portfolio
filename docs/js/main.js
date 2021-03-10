@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const manager = {
         components: {
             projectsBox: document.querySelector('#projects-box'),
-            // colorSchemeSwitch: document.querySelector('#color-scheme-switch')
+            colorSchemeSwitch: document.querySelectorAll('.colorScheme-switch-container')[0]
         },
         settingsData: JSON.parse(await ajax('./settings.json', 'application/json')) || {},
         projectsData: JSON.parse(await ajax('./data.json', 'application/json')) || {},
@@ -22,24 +22,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         setStyle(manager.settingsData.defaults.colorSchemeMode)
     }
 
-    function setStyle(colorSchemeMode = 'light') {
+    function setStyle(colorSchemeMode) {
+        const colorSchemeModeToggled = getColorSchemeModeToggled(colorSchemeMode)
         const colors = manager.settingsData.colors
         setElementStyle(document.body, 'backgroundColor', colors[colorSchemeMode + 'Color'])
         setElementStyle(document.body, 'color', colors[colorSchemeMode + 'ModeTextColor'])
+        setElementStyle(manager.components.colorSchemeSwitch, 'backgroundColor', colors[colorSchemeMode + 'ModeTextColor'])
+        setElementStyle(manager.components.colorSchemeSwitch, 'borderColor', colors[colorSchemeMode + 'ModeTextColor'])
         const projectsBoxContainer = document.querySelectorAll('.projects-box-container')[0]
         setElementStyle(projectsBoxContainer, 'borderColor', colors[colorSchemeMode + 'ModeTextColor'])
         const projectBoxContainers = document.querySelectorAll('.project-box-container')
         projectBoxContainers.forEach(element => {
-            setElementStyle(element, 'borderColor', colors[getColorSchemeModeToggled(colorSchemeMode) + 'ModeTextColor'])
-            setElementStyle(element, 'backgroundColor', colors[getColorSchemeModeToggled(colorSchemeMode) + 'Color'])
+            setElementStyle(element, 'borderColor', colors[colorSchemeModeToggled + 'ModeTextColor'])
+            setElementStyle(element, 'backgroundColor', colors[colorSchemeModeToggled + 'Color'])
             element.addEventListener('mouseover', function () {
-                setElementStyle(this, 'boxShadow', `5px 5px 0px 2.5px ${colors[getColorSchemeModeToggled(colorSchemeMode) + 'Color']}`)
+                setElementStyle(this, 'boxShadow', `5px 5px 0px 2.5px ${colors[colorSchemeModeToggled + 'Color']}`)
             })
             element.addEventListener('mouseleave', function () {
                 setElementStyle(this, 'boxShadow', 'none')
             })
             const projectTitle = element.querySelectorAll('.project-title')[0]
-            projectTitle.style.color = colors[getColorSchemeModeToggled(colorSchemeMode) + 'ModeTextColor']
+            projectTitle.style.color = colors[colorSchemeModeToggled + 'ModeTextColor']
         })
     }
 
@@ -60,23 +63,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         return toggledMode
     }
 
-    function enableColorSchemeSwitch(colorSchemeMode = 'light') {
+    function enableColorSchemeSwitch(colorSchemeMode) {
+        const colorSchemeModeToggled = getColorSchemeModeToggled(colorSchemeMode)
         const colors = manager.settingsData.colors
-        const switchElement = document.querySelectorAll('.colorScheme-switch-container')[0]
-        const bgColor = colors[getColorSchemeModeToggled(colorSchemeMode) + 'Color']
-        switchElement.style.backgroundColor = bgColor
-        switchElement.style.borderColor = bgColor
-        const switchImgs = switchElement.querySelectorAll('.switch-img')
+        const bgColor = colors[colorSchemeModeToggled + 'Color']
+        setElementStyle(manager.components.colorSchemeSwitch, 'backgroundColor', bgColor)
+        setElementStyle(manager.components.colorSchemeSwitch, 'borderColor', bgColor)
+        const switchImgs = manager.components.colorSchemeSwitch.querySelectorAll('.switch-img')
         switchImgs.forEach((img, index) => {
-            img.style.backgroundColor = 'transparent'
+            const switchSelectedOptionColor = colors[colorSchemeModeToggled + 'ModeTextColor']
+            const imgColorSchemeMode = img.dataset.colorSchemeMode
+            if (imgColorSchemeMode === manager.settingsData.defaults.colorSchemeMode) {
+                setElementStyle(img, 'backgroundColor', switchSelectedOptionColor)
+            } else {
+                setElementStyle(img, 'backgroundColor', 'transparent')
+            }
             img.addEventListener('click', function () {
-                this.style.backgroundColor = colors[getColorSchemeModeToggled(colorSchemeMode) + 'ModeTextColor']
+                setElementStyle(this, 'backgroundColor', switchSelectedOptionColor)
                 switchImgs.forEach((currentImg, currentIndex) => {
                     if (currentIndex !== index) {
-                        currentImg.style.backgroundColor = 'transparent'
+                        setElementStyle(currentImg, 'backgroundColor', 'transparent')
                     }
                 })
-                setStyle(this.dataset.colorSchemeMode)
+                setElementStyle(this, 'backgroundColor', colors[getColorSchemeModeToggled(imgColorSchemeMode) + 'ModeTextColor'])
+                setStyle(imgColorSchemeMode)
             })
         })
     }
