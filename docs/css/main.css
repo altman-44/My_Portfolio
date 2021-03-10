@@ -25,7 +25,7 @@ main {
 }
 
 .left-side, .right-side {
-    padding: 20% 15% 20% 15%;
+    padding: 20% 5% 20% 5%;
 }
 
 .side-box {
@@ -35,7 +35,6 @@ main {
 }
 
 .projects-box-container {
-    width: 90%;
     border: 2px solid;
     border-radius: 8px;
     padding: 3% 2% 3% 2%;
@@ -79,14 +78,24 @@ main {
     justify-content: space-between;
     border-radius: 50px;
     overflow: hidden;
-    /* transform: translate(-50%, -50%); */
 }
 
 .colorScheme-switch-container .switch-img {
-    width: 46%;
+    width: 48%;
     cursor: pointer;
     border-radius: 50px;
+    padding: 4%;
+    transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
     transition: .8s ease;
+}
+
+.colorScheme-switch-container .switch-img:hover {
+    transform: rotate(720deg);
+    -ms-transform: rotate(720deg);
+    -webkit-transform: rotate(720deg);
+    transition: transform .4s ease;
 }
 
 @media screen and (min-width: 769px) {
@@ -99,6 +108,14 @@ main {
 }
 
 @media screen and (max-width: 768px) {
+    .colorScheme-switch-container {
+        flex-direction: column;
+        -ms-flex-direction: column;
+        border-radius: 25px;
+    }
+    .colorScheme-switch-container .switch-img {
+        width: 100%;
+    }
     .title, .subtitle {
         margin-bottom: 3%;
     }
