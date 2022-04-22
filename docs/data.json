@@ -7,6 +7,14 @@
                 "url": "./img/fights_webapp.png",
                 "alt": "Fights Web App preview"
             }
+        },
+        {
+            "name": "Film data",
+            "url": "https://films-data-api.herokuapp.com/",
+            "img_preview": {
+                "url": "./img/film-data.jpg",
+                "alt": "Film data preview"
+            }
         }
     ],
     "defaults": {
